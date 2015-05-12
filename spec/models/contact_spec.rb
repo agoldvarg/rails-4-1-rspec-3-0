@@ -35,6 +35,10 @@ describe Contact do
     expect(contact.errors[:email]).to include("has already been taken")
   end
 
+  it "has three phone numbers" do
+    expect(create(:contact).phones.count).to eq(3)
+  end
+
   describe '#name' do
     it "returns a contact's full name as a string" do
       contact = build(:contact, firstname: 'John', lastname: 'Doe')
@@ -45,18 +49,9 @@ describe Contact do
 
   describe '::by_letter' do
     before :each do
-      @smith = Contact.create(
-        firstname: 'John',
-        lastname: 'Smith',
-        email: 'jsmith@example.com')
-      @jones = Contact.create(
-        firstname: 'Tim',
-        lastname: 'Jones',
-        email: 'tjones@example.com')
-      @johnson = Contact.create(
-        firstname: 'John',
-        lastname: 'Johnson',
-        email: 'jjohnson@example.com')
+      @smith = create(:contact, lastname: 'Smith')
+      @jones = create(:contact, lastname: 'Jones')
+      @johnson = create(:contact, lastname: 'Johnson')
     end
 
     context 'matching letters' do
