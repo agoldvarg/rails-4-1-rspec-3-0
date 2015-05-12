@@ -3,42 +3,33 @@ require 'rails_helper'
 describe Contact do
 
   it "has a valid factory" do
-    expect(FactoryGirl.build(:contact)).to be_valid
-  end
-
-  it "is valid with a firstname, lastname, and email" do
-    contact = Contact.new(
-      firstname: 'Aaron',
-      lastname: 'Sumner',
-      email: 'tester@example.com')
-
-    expect(contact).to be_valid
+    expect(build(:contact)).to be_valid
   end
 
   it "is invalid without a firstname" do
-    contact = FactoryGirl.build(:contact, firstname: nil)
+    contact = build(:contact, firstname: nil)
     contact.valid?
 
     expect(contact.errors[:firstname]).to include("can't be blank")
   end
 
   it "is invalid without a lastname" do
-    contact = FactoryGirl.build(:contact, lastname: nil)
+    contact = build(:contact, lastname: nil)
     contact.valid?
 
     expect(contact.errors[:lastname]).to include("can't be blank")
   end
 
   it "is invalid without an email address" do
-    contact = FactoryGirl.build(:contact, email: nil)
+    contact = build(:contact, email: nil)
     contact.valid?
 
     expect(contact.errors[:email]).to include("can't be blank")
   end
 
   it "is invalid with a dubplicate email address" do
-    FactoryGirl.create(:contact, email: 'tester@example')
-    contact = FactoryGirl.build(:contact, email: 'tester@example')
+    create(:contact, email: 'tester@example')
+    contact = build(:contact, email: 'tester@example')
     contact.valid?
 
     expect(contact.errors[:email]).to include("has already been taken")
@@ -46,7 +37,7 @@ describe Contact do
 
   describe '#name' do
     it "returns a contact's full name as a string" do
-      contact = FactoryGirl.build(:contact, firstname: 'John', lastname: 'Doe')
+      contact = build(:contact, firstname: 'John', lastname: 'Doe')
 
       expect(contact.name).to eq('John Doe')
     end
