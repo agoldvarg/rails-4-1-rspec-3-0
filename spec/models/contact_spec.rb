@@ -13,18 +13,21 @@ describe Contact do
   it "is invalid without a firstname" do
     contact = Contact.new(firstname: nil)
     contact.valid?
+
     expect(contact.errors[:firstname]).to include("can't be blank")
   end
 
   it "is invalid without a lastname" do
     contact = Contact.new(lastname: nil)
     contact.valid?
+
     expect(contact.errors[:lastname]).to include("can't be blank")
   end
 
   it "is invalid without an email address" do
     contact = Contact.new(email: nil)
     contact.valid?
+
     expect(contact.errors[:email]).to include("can't be blank")
   end
 
@@ -38,6 +41,7 @@ describe Contact do
       email: 'tester@example'
       )
     contact.valid?
+
     expect(contact.errors[:email]).to include("has already been taken")
   end
 
@@ -46,6 +50,7 @@ describe Contact do
       it "returns a contact's full name as a string" do
         contact = Contact.new(firstname: 'John', lastname: 'Doe',
           email: 'johndoe@example.com')
+
         expect(contact.name).to eq('John Doe')
       end
     end
